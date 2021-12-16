@@ -114,6 +114,8 @@ function initialize() {
   draw();
 }
 
+var audio = document.createElement("audio");
+
 function launch(self) {
   self.disabled = true;
 
@@ -129,10 +131,15 @@ function launch(self) {
   draw();
 
   timer = setInterval(ball.run, 10);
+
+  audio.src = "./res/audio/shoot.wav";
+  audio.play();
 }
 
 function stop() {
   clearInterval(timer);
+
+  audio.pause();
 
   document.getElementById("btnLaunch").disabled = false;
 
