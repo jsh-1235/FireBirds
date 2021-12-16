@@ -22,17 +22,6 @@
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></scrip>
   <script src="./js/ball.js"></script>
   <script>
-    // $("input[type=range]").on("input", function () {
-    //   // $(this).trigger("change");
-    //   console.log("1");
-    // });
-
-    // $("#velocity").on("change", function () {
-    //   $("#lableVelocity").html($("#velocity").val());
-    // });
-
-
-
     window.addEventListener("load", function () {
       const velocity = document.querySelector('#velocity');
       const angle = document.querySelector('#angle');
@@ -43,8 +32,9 @@
       });
 
       angle.addEventListener('input', function (e) {
-        console.log("angle", e.target.value);
+        // console.log("angle", e.target.value);
         document.querySelector('#labelAngle').textContent = `ANGLE (${e.target.value})`;
+        control(parseInt(e.target.value));
       });
 
       document.querySelector('#labelVelocity').textContent = `VELOCITY (${document.querySelector('#velocity').value})`;

@@ -54,6 +54,12 @@ const ball = {
       if (ball.x >= pig.x && ball.y >= pig.y && ball.x <= pig.x + pig.width && ball.y <= pig.y + pig.height) {
         document.getElementById("level").innerHTML = "LEVEL " + ++level.value;
 
+        if (!audioCrash.paused || audioCrash.currentTime > 0 || !audioCrash.ended) {
+          audioCrash.pause();
+        }
+
+        audioCrash.play();
+
         stop();
       }
     }
@@ -70,6 +76,7 @@ bird.image.src = bird.src;
 pig.image.src = pig.src;
 
 function draw() {
+  context.setTransform(1, 0, 0, 1, 0, 0);
   context.clearRect(0, 0, stage.width, stage.height);
 
   context.drawImage(stage.image, 0, 0);
@@ -80,7 +87,26 @@ function draw() {
   context.beginPath();
   context.arc(ball.x, ball.y, ball.radius, 0, 2.0 * Math.PI, true);
   context.fillStyle = "orangeRed";
+  context.closePath();
   context.fill();
+}
+
+function control(angle) {
+  draw();
+
+  var rect = { x: bird.width - 40, y: stage.height - bird.height, width: 80, height: 2 };
+
+  // context.fillStyle = "orangeRed";
+  // context.fillRect(rect.x, rect.y, rect.width, rect.height);
+
+  context.translate(rect.x + rect.width / 2, rect.y + rect.height / 2);
+  context.rotate(((180 - angle) * Math.PI) / 180);
+  context.translate(-rect.x - rect.width / 2, -rect.y - rect.height / 2);
+
+  context.fillStyle = "rgba(255, 0, 0, 0.25)";
+  context.fillRect(rect.x, rect.y, rect.width, rect.height);
+
+  console.log(angle, (angle * Math.PI) / 180);
 }
 
 function getRandomArbitrary(min, max) {
@@ -114,7 +140,10 @@ function initialize() {
   draw();
 }
 
-var audio = document.createElement("audio");
+const audioShot = document.createElement("audio");
+const audioCrash = document.createElement("audio");
+audioShot.src = "./res/audio/shot.wav";
+audioCrash.src = "./res/audio/crash.wav";
 
 function launch(self) {
   self.disabled = true;
@@ -132,14 +161,16 @@ function launch(self) {
 
   timer = setInterval(ball.run, 10);
 
-  audio.src = "./res/audio/shoot.wav";
-  audio.play();
+  audioShot.currentTime = 0;
+  audioShot.play();
 }
 
 function stop() {
   clearInterval(timer);
 
-  audio.pause();
+  if (!audioShot.paused || audioShot.currentTime > 0 || !audioShot.ended) {
+    audioShot.pause();
+  }
 
   document.getElementById("btnLaunch").disabled = false;
 
