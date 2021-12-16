@@ -6,8 +6,8 @@ const level = {
 };
 
 const stage = {
-  width: 820,
-  height: 344,
+  width: 1000,
+  height: 500,
   image: new Image(),
   src: "res/images/bg.png",
 };
@@ -38,8 +38,6 @@ const ball = {
   angle: 0,
   radius: 10,
   run: function () {
-    let factor = 1;
-
     ball.x += ball.vx * ball.t;
 
     ball.y += -(ball.vy * ball.t - 0.5 * 9.81 * Math.pow(ball.t, 2));
@@ -53,6 +51,10 @@ const ball = {
     } else {
       if (ball.x >= pig.x && ball.y >= pig.y && ball.x <= pig.x + pig.width && ball.y <= pig.y + pig.height) {
         document.getElementById("level").innerHTML = "LEVEL " + ++level.value;
+
+        let progressbar = document.querySelector(".progress-bar");
+        progressbar.style.width = level.value + "%";
+        progressbar.textContent = progressbar.style.width;
 
         if (!audioCrash.paused || audioCrash.currentTime > 0 || !audioCrash.ended) {
           audioCrash.pause();
@@ -79,8 +81,12 @@ function draw() {
   context.setTransform(1, 0, 0, 1, 0, 0);
   context.clearRect(0, 0, stage.width, stage.height);
 
-  context.drawImage(stage.image, 0, 0);
-  context.drawImage(bird.image, 0, 295);
+  // context.globalCompositeOperation = "destination-over";
+  // context.fillStyle = "rgba(0, 0, 0, 0.85)";
+  // context.fillRect(0, 0, canvas.width, canvas.height);
+
+  // context.drawImage(stage.image, 0, 0);
+  context.drawImage(bird.image, 0, canvas.height - bird.height);
 
   context.drawImage(pig.image, pig.x, pig.y);
 
@@ -94,16 +100,18 @@ function draw() {
 function control(angle) {
   draw();
 
-  var rect = { x: bird.width - 40, y: stage.height - bird.height, width: 80, height: 2 };
+  let L = 50;
 
-  // context.fillStyle = "orangeRed";
+  let rect = { x: bird.width - L + L, y: stage.height - bird.height, width: L * 2, height: 2 };
+
+  // context.fillStyle = "rgba(255, 255, 0, 0.75)";
   // context.fillRect(rect.x, rect.y, rect.width, rect.height);
 
-  context.translate(rect.x + rect.width / 2, rect.y + rect.height / 2);
+  context.translate(rect.x + rect.width / 2 - L, rect.y + rect.height / 2);
   context.rotate(((180 - angle) * Math.PI) / 180);
-  context.translate(-rect.x - rect.width / 2, -rect.y - rect.height / 2);
+  context.translate(-rect.x - rect.width / 2 - L, -rect.y - rect.height / 2);
 
-  context.fillStyle = "rgba(255, 0, 0, 0.25)";
+  context.fillStyle = "rgba(255, 255, 0, 0.75)";
   context.fillRect(rect.x, rect.y, rect.width, rect.height);
 
   console.log(angle, (angle * Math.PI) / 180);

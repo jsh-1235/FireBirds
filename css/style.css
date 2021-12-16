@@ -2,3 +2,20 @@
   --bs-text-opacity: 1;
   color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
 }
+
+canvas {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+/* main>.container {
+  padding: 10px 10px 0;
+} */
+
+.footer {
+  background-color: #f5f5f5;
+}
+
+.footer>.container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
