@@ -3,6 +3,7 @@ const level = {
   y: 0,
   value: 1,
   backup: 0,
+  count: 0,
 };
 
 const stage = {
@@ -54,7 +55,7 @@ const ball = {
 
         let progressbar = document.querySelector(".progress-bar");
         progressbar.style.width = level.value + "%";
-        progressbar.textContent = progressbar.style.width;
+        // progressbar.textContent = progressbar.style.width;
 
         if (!audioCrash.paused || audioCrash.currentTime > 0 || !audioCrash.ended) {
           audioCrash.pause();
@@ -164,6 +165,8 @@ function launch(self) {
 
   ball.vx = ball.velocity * Math.cos(radian);
   ball.vy = ball.velocity * Math.sin(radian);
+
+  level.count++;
 
   draw();
 

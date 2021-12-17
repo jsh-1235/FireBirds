@@ -51,8 +51,11 @@
         control(parseInt(velocity), parseInt(angle));
       });
 
-      document.querySelector('#labelVelocity').textContent = `VELOCITY (${document.querySelector('#inputVelocity').value})`;
-      document.querySelector('#labelAngle').textContent = `ANGLE (${document.querySelector('#inputAngle').value})`;
+      velocity = document.querySelector('#inputVelocity').value;
+      angle = document.querySelector('#inputAngle').value;
+
+      document.querySelector('#labelVelocity').textContent = `VELOCITY (${velocity})`;
+      document.querySelector('#labelAngle').textContent = `ANGLE (${angle})`;
     });
   </script>
 </head>
@@ -62,9 +65,9 @@
     <div class="row justify-content-center m-3">
       <span class="text-center fs-1 fw-bold text-info" id="level" style="--bs-text-opacity: 0.75;">LEVEL 1</span>
     </div>
-    <div class="progress row m-3">
-      <div class="progress-bar" role="progressbar" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0"
-        style="width: 0%;">0%</div>
+    <div class="progress row m-3" style="height: 30px;">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemax="100"
+        aria-valuemin="0" aria-valuenow="0" style="width: 0%;"></div>
     </div>
     <div class="row m-3">
       <canvas id="canvas" width="1000" height="500"></canvas>
