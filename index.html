@@ -24,23 +24,35 @@
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></scrip>
   <script src="./js/ball.js"></script>
   <script>
+    var velocity = 0;
+    var angle = 0;
+
     window.addEventListener("load", function () {
-      const velocity = document.querySelector('#velocity');
-      const angle = document.querySelector('#angle');
+      const inputVelocity = document.querySelector('#inputVelocity');
+      const inputAngle = document.querySelector('#inputAngle');
 
-      velocity.addEventListener('input', function (e) {
-        console.log("velocity", e.target.value);
-        document.querySelector('#labelVelocity').textContent = `VELOCITY (${e.target.value})`;
+      inputVelocity.addEventListener('input', function (e) {
+        // console.log("velocity", e.target.value);
+
+        velocity = e.target.value;
+
+        document.querySelector('#labelVelocity').textContent = `VELOCITY (${velocity})`;
+
+        control(parseInt(velocity), parseInt(angle));
       });
 
-      angle.addEventListener('input', function (e) {
+      inputAngle.addEventListener('input', function (e) {
         // console.log("angle", e.target.value);
-        document.querySelector('#labelAngle').textContent = `ANGLE (${e.target.value})`;
-        control(parseInt(e.target.value));
+
+        angle = e.target.value;
+
+        document.querySelector('#labelAngle').textContent = `ANGLE (${angle})`;
+
+        control(parseInt(velocity), parseInt(angle));
       });
 
-      document.querySelector('#labelVelocity').textContent = `VELOCITY (${document.querySelector('#velocity').value})`;
-      document.querySelector('#labelAngle').textContent = `ANGLE (${document.querySelector('#angle').value})`;
+      document.querySelector('#labelVelocity').textContent = `VELOCITY (${document.querySelector('#inputVelocity').value})`;
+      document.querySelector('#labelAngle').textContent = `ANGLE (${document.querySelector('#inputAngle').value})`;
     });
   </script>
 </head>
@@ -58,12 +70,12 @@
       <canvas id="canvas" width="1000" height="500"></canvas>
     </div>
     <div class="row m-3">
-      <label class="form-label text-muted" id="labelVelocity" for="velocity">VELOCITY</label>
-      <input class="form-range" id="velocity" type="range" value="8" min="0" max="100" step="1">
+      <label class="form-label text-muted" id="labelVelocity" for="inputVelocity">VELOCITY</label>
+      <input class="form-range" id="inputVelocity" type="range" value="5" min="0" max="20" step="1">
     </div>
     <div class="row m-3">
-      <label class="form-label text-muted" id="labelAngle" for="angle">ANGLE</label>
-      <input class="form-range" id="angle" type="range" value="45" min="0" max="90" step="1">
+      <label class="form-label text-muted" id="labelAngle" for="inputAngle">ANGLE</label>
+      <input class="form-range" id="inputAngle" type="range" value="45" min="0" max="90" step="1">
     </div>
     <div class="row m-3">
       <button class="button fs-3 fw-bold p-3 btn btn-outline-success" id="btnLaunch"

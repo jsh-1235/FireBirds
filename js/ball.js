@@ -82,7 +82,7 @@ function draw() {
   context.clearRect(0, 0, stage.width, stage.height);
 
   // context.globalCompositeOperation = "destination-over";
-  // context.fillStyle = "rgba(0, 0, 0, 0.85)";
+  // context.fillStyle = "rgba(0, 0, 0, 0.1)";
   // context.fillRect(0, 0, canvas.width, canvas.height);
 
   // context.drawImage(stage.image, 0, 0);
@@ -97,19 +97,19 @@ function draw() {
   context.fill();
 }
 
-function control(angle) {
+function control(velocity, angle) {
   draw();
 
-  let L = 50;
+  let barWidth = velocity * 5;
+  let barHeight = 4;
+  let rect = { x: bird.width - barWidth + barWidth, y: stage.height - bird.height, width: barWidth * 2, height: barHeight };
 
-  let rect = { x: bird.width - L + L, y: stage.height - bird.height, width: L * 2, height: 2 };
+  context.fillStyle = "rgba(255, 255, 0, 0.5)";
+  context.fillRect(rect.x, rect.y - barHeight / 2, rect.width, rect.height);
 
-  // context.fillStyle = "rgba(255, 255, 0, 0.75)";
-  // context.fillRect(rect.x, rect.y, rect.width, rect.height);
-
-  context.translate(rect.x + rect.width / 2 - L, rect.y + rect.height / 2);
+  context.translate(rect.x + rect.width / 2 - barWidth, rect.y + rect.height / 2 - barHeight / 2);
   context.rotate(((180 - angle) * Math.PI) / 180);
-  context.translate(-rect.x - rect.width / 2 - L, -rect.y - rect.height / 2);
+  context.translate(-rect.x - rect.width / 2 - barWidth, -rect.y - rect.height / 2);
 
   context.fillStyle = "rgba(255, 255, 0, 0.75)";
   context.fillRect(rect.x, rect.y, rect.width, rect.height);
@@ -158,8 +158,8 @@ function launch(self) {
 
   initialize();
 
-  ball.velocity = Number(document.getElementById("velocity").value);
-  ball.angle = Number(document.getElementById("angle").value);
+  ball.velocity = Number(document.getElementById("inputVelocity").value);
+  ball.angle = Number(document.getElementById("inputAngle").value);
   var radian = (ball.angle * Math.PI) / 180;
 
   ball.vx = ball.velocity * Math.cos(radian);
